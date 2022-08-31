@@ -1,0 +1,28 @@
+name: conformance-test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Run the component
+        shell: bash
+        run: docker run -d -it --env DAPR_COMPONENT_SOCKET_PATH=/tmp/socket.sock -v /tmp:/tmp tmacam/dapr-memstore-java:latest
+
+      - name: Conformance Tests
+        uses: ./
+        with:
+          socket: /tmp/socket.sock
+          metadata: |
+            timeout: 10s
+          operations: |
+            - get
