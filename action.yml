@@ -26,7 +26,6 @@ runs:
       with:
         repository: mcandeia/components-contrib
         ref: "feat/conformance-module"
-        path: "components-contrib"
     - name: Run Tests
       shell: bash
       env:
@@ -34,5 +33,5 @@ runs:
         DAPR_CONFORMANCE_COMPONENT_OPERATIONS: ${{ inputs.operations }}
         DAPR_CONFORMANCE_COMPONENT_SOCKET: ${{ inputs.socket }}
       run: |
-        cd components-contrib/tests/conformance
+        cd tests/conformance
         go test -v -tags=conftests -count=1 . -run="TestPluggableConformance/state"
