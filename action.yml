@@ -13,6 +13,23 @@ inputs:
   operations:
     description: "The tested operations."
     required: false
+  test_config:
+    description: "The additional test config."
+    required: false
+  type:
+    type: choice
+    description: "The component type."
+    required: true
+    options:
+      - state
+      - pubsub
+      - inputbinding
+      - outputbinding
+      - middleware.http
+      - configuration
+      - secret
+      - lock
+      - nameresolution
 runs:
   using: "composite"
   steps:
@@ -32,6 +49,7 @@ runs:
         DAPR_CONFORMANCE_COMPONENT_METADATA: ${{ inputs.metadata }}
         DAPR_CONFORMANCE_COMPONENT_OPERATIONS: ${{ inputs.operations }}
         DAPR_CONFORMANCE_COMPONENT_SOCKET: ${{ inputs.socket }}
+        DAPR_CONFORMANCE_COMPONENT_CONFIG: ${{ input.test_config }}
       run: |
         cd tests/conformance
-        go test -v -tags=conftests -count=1 . -run="TestPluggableConformance/state"
+        go test -v -tags=conftests -count=1 . -run="TestPluggableConformance/${{ inputs.type }}"
