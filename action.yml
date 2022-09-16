@@ -49,7 +49,7 @@ runs:
         DAPR_CONFORMANCE_COMPONENT_METADATA: ${{ inputs.metadata }}
         DAPR_CONFORMANCE_COMPONENT_OPERATIONS: ${{ inputs.operations }}
         DAPR_CONFORMANCE_COMPONENT_SOCKET: ${{ inputs.socket }}
-        DAPR_CONFORMANCE_COMPONENT_CONFIG: ${{ input.test_config }}
+        DAPR_CONFORMANCE_COMPONENT_CONFIG: ${{ inputs.test_config }}
       run: |
         cd tests/conformance
         go test -v -tags=conftests -count=1 . -run="TestPluggableConformance/${{ inputs.type }}"
